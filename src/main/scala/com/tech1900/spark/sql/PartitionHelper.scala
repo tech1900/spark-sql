@@ -16,6 +16,10 @@ object PartitionHelper {
       sqlContext
     }
     def removeRangeParitionAggregation(): SQLContext ={
+      if(sqlContext.experimental.extraStrategies.nonEmpty){
+        sqlContext.experimental.extraStrategies =
+          sqlContext.experimental.extraStrategies.filter(x=> !x.isInstanceOf[RangePartitionStrategy])
+      }
       sqlContext
     }
   }
